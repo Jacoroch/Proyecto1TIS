@@ -18,7 +18,7 @@ from django.shortcuts import redirect, get_object_or_404, render
 from .models import Product, Variation
 from django.http import JsonResponse
 from django.conf import settings
-
+from .weather_service import obtener_clima
 
 # Create your views here.
 
@@ -171,6 +171,12 @@ def checkout_thank_you(request):
 class HomePageView(TemplateView):
     template_name = 'urbanApp/home.html'
     
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # Obtén el clima de Medellín y pásalo al contexto
+        context['clima'] = obtener_clima("Medellin")
+        return context
+
 class AboutPageView(TemplateView):
     template_name = 'urbanApp/about.html'
     
