@@ -134,3 +134,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
+
+# URL de la API de Productos Aliados (temporalmente apuntando a tu API local)
+PRODUCTOS_ALIADOS_API_URL = 'http://127.0.0.1:8000/api/productos/'

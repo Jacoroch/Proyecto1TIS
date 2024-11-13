@@ -27,6 +27,8 @@ urlpatterns = [
     path('checkout/', views.checkout, name='checkout'),  # Ruta para la página de checkout
     path('checkout/complete/', views.checkout_complete, name='checkout_complete'),  # Ruta para completar el checkout
     path('checkout/thank-you/', views.checkout_thank_you, name='checkout_thank_you'),  # Ruta para la página de agradecimiento
+    path('api/productos/', ProductListJSONView.as_view(), name='productos_json'),
+    path('productos-aliados/', ProductosAliadosView.as_view(), name='productos_aliados'),
 ]
 
 if settings.DEBUG:

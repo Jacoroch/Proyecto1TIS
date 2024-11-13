@@ -1,3 +1,4 @@
+import requests
 from django import forms
 from django.views.generic import TemplateView, ListView, DetailView
 from django.shortcuts import render, get_object_or_404, redirect
@@ -16,6 +17,7 @@ from .forms import UserRegisterForm
 from django.shortcuts import redirect, get_object_or_404, render
 from .models import Product, Variation
 from django.http import JsonResponse
+from django.conf import settings
 
 
 # Create your views here.
@@ -200,3 +202,34 @@ class ProductCreateView(LoginRequiredMixin,View):
             form.save()
             return redirect('product-list')
         return render(request, self.template_name, {'form': form})
+    
+class ProductListJSONView(View):
+    def get(self, request, *args, **kwargs):
+        productos = Product.objects.all()
+        productos_data = [
+            {
+                "name": producto.name,
+                "price": str(producto.price),
+                "description": producto.description,
+                "url": request.build_absolute_uri(producto.get_absolute_url())  # URL absoluta del producto
+            }
+            for producto in productos
+        ]
+        return JsonResponse(productos_data, safe=False)
+
+class ProductosAliadosView(View):
+    def get(self, request, *args, **kwargs):
+        # Obtener la URL de la API desde settings
+        url = settings.PRODUCTOS_ALIADOS_API_URL
+
+        # Hacer una solicitud GET a la URL de la API
+        try:
+            response = requests.get(url)
+            response.raise_for_status()  # Verificar si hubo un error
+            productos = response.json()  # Convertir la respuesta JSON a un diccionario de Python
+        except requests.exceptions.RequestException as e:
+            productos = []  # En caso de error, mostrar una lista vacía
+            print(f"Error al consumir el servicio JSON: {e}")
+        
+        # Pasar los datos al template
+        return render(request, 'products/productos_aliados.html', {'productos': productos})
