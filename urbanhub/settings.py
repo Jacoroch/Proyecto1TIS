@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-l2emd%=iazo#k$2l6cl_vl^^$&e5966h6*!zm^$ww^h9&mhhx*
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['my-django-app-615783978424.southamerica-west1.run.app', 'localhost', '127.0.0.1']
 
 
 # Application definition
@@ -135,5 +135,8 @@ LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
-# URL de la API de Productos Aliados (temporalmente apuntando a tu API local)
-PRODUCTOS_ALIADOS_API_URL = 'http://127.0.0.1:8000/api/productos/'
+# URL de la API de Productos Aliados (temporalmente apunta a la API propia)
+PRODUCTOS_ALIADOS_API_URL = 'https://my-django-app-615783978424.southamerica-west1.run.app/api/productos/'
+
+CSRF_TRUSTED_ORIGINS = ['https://my-django-app-615783978424.southamerica-west1.run.app']
+
